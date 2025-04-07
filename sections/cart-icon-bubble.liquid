@@ -1,0 +1,34 @@
+{% comment %}      render 'icon-cart-empty'   render 'icon-cart' {% endcomment %}
+{%- liquid
+  if cart == empty
+    render 'custom-icons': custom_icon: "cart-empty"
+  else
+    render 'custom-icons': custom_icon: "cart-filled"
+  endif
+-%}
+<!--
+  {% if section.settings.cart_text != blank %}
+    <span class="small-hide medium-hide">
+      {{ section.settings.cart_text }}
+    </span>
+  {% endif %}
+-->
+{% comment %}<span class="visually-hidden small-hide medium-hide">{{ 'templates.cart.cart' | t }}</span> {% endcomment %}
+{%- if cart != empty -%}
+  <div
+    class="
+      {% if section.settings.cart_bubble_cstm  %}
+      cart--count--bubble--cstm
+       {% endif %}cart-count-bubble cart--icon--items
+    "
+  >
+    {%- if cart.item_count < 100 -%}
+      <span aria-hidden="true" data-text="{{ cart.item_count }}">
+        {%- if section.settings.cart_bubble_cstm %} {% endif -%}
+        {{- cart.item_count -}}
+        {%- if section.settings.cart_bubble_cstm %} {% endif -%}
+      </span>
+    {%- endif -%}
+    <!-- <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span> -->
+  </div>
+{%- endif -%}

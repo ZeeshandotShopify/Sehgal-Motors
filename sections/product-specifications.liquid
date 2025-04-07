@@ -1,0 +1,228 @@
+{{ 'product-specifications.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{% assign specifications_object = product.metafields.custom.specifications.value %}
+
+{% if product.metafields.custom.specifications
+  and product.tags contains 'new car'
+  or product.tags contains 'new cars'
+  or product.tags contains 'New Car'
+%}
+  <div class="product-overview color-{{ section.settings.color_scheme }} gradient{% if section.settings.title == blank %} no-heading{% endif %}">
+    <div
+      class="page-width page--width--cstm  product-page-page-width   product-page-with-thumbnails-page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      {% if settings.animations_reveal_on_scroll %}
+        data-cascade
+      {% endif %}
+    >
+      {%- unless section.settings.title == blank -%}
+        <div class="title-wrapper-with-link title-wrapper--no-top-margin section__title">
+          <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.title }}
+          </h2>
+        </div>
+      {%- endunless -%}
+      <div class="product-specification-content-wrapper">
+        {% for specification in specifications_object %}
+          {% if specification.price != blank %}
+            <div class="specification-item" data-specification-type="price">
+              <div class="specification-item-label h4">Price</div>
+              <span class="spcification-item-value">
+                {{- specification.price -}}
+              </span>
+            </div>
+          {% endif %}
+          {% if specification.dimensions_length_x_width_x_height != blank %}
+            <div class="specification-item" data-specification-type="dimension">
+              <div class="specification-item-label h4">Dimension</div>
+              <span class="spcification-item-value">{{ specification.dimensions_length_x_width_x_height }}</span>
+            </div>
+          {% endif %}
+          {% if specification.displacement != blank %}
+            <div class="specification-item" data-specification-type="displacement">
+              <div class="specification-item-label h4">Displacement</div>
+              <span class="spcification-item-value">{{ specification.displacement }}</span>
+            </div>
+          {% endif %}
+          {% if specification.horse_power != blank %}
+            <div class="specification-item" data-specification-type="horse-power">
+              <div class="specification-item-label h4">Horse Power</div>
+              <span class="spcification-item-value">{{ specification.horse_power }}</span>
+            </div>
+          {% endif %}
+          {% if specification.boot_space != blank %}
+            <div class="specification-item" data-specification-type="boot-space">
+              <div class="specification-item-label h4">Boot Space</div>
+              <span class="spcification-item-value">{{ specification.boot_space }}</span>
+            </div>
+          {% endif %}
+          {% if specification.fuel_type != blank %}
+            <div class="specification-item" data-specification-type="fuel-type">
+              <div class="specification-item-label h4">Fuel Price</div>
+              <span class="spcification-item-value">{{ specification.fuel_type }}</span>
+            </div>
+          {% endif %}
+          {% if specification.fuel_tank_capacity != blank %}
+            <div class="specification-item" data-specification-type="fuel-tank-capacity">
+              <div class="specification-item-label h4">Fuel Tank Capacity</div>
+              <span class="spcification-item-value">{{ specification.fuel_tank_capacity }}</span>
+            </div>
+          {% endif %}
+          {% if specification.top_speed != blank %}
+            <div class="specification-item" data-specification-type="top-speed">
+              <div class="specification-item-label h4">Top Speed</div>
+              <span class="spcification-item-value">{{ specification.top_speed }}</span>
+            </div>
+          {% endif %}
+          {% if specification.body_type != blank %}
+            <div class="specification-item" data-specification-type="body-type">
+              <div class="specification-item-label h4">Body Type</div>
+              <span class="spcification-item-value">{{ specification.body_type }}</span>
+            </div>
+          {% endif %}
+          {% if specification.ground_clearance != blank %}
+            <div class="specification-item" data-specification-type="ground-clearence">
+              <div class="specification-item-label h4">Ground Clearance</div>
+              <span class="spcification-item-value">{{ specification.ground_clearance }}</span>
+            </div>
+          {% endif %}
+          {% if specification.horse_power != blank %}
+            <div class="specification-item" data-specification-type="horse-power">
+              <div class="specification-item-label h4">Horse Power</div>
+              <span class="spcification-item-value">{{ specification.horse_power }}</span>
+            </div>
+          {% endif %}
+          {% if specification.transmission != blank %}
+            <div class="specification-item" data-specification-type="transmission">
+              <div class="specification-item-label h4">Transmission</div>
+              <span class="spcification-item-value">{{ specification.transmission }}</span>
+            </div>
+          {% endif %}
+          {% if specification.torque != blank %}
+            <div class="specification-item" data-specification-type="torque">
+              <div class="specification-item-label h4">Torque</div>
+              <span class="spcification-item-value">{{ specification.torque }}</span>
+            </div>
+          {% endif %}
+          {% if specification.kerb_weight != blank %}
+            <div class="specification-item" data-specification-type="kerb-weight">
+              <div class="specification-item-label h4">Kerb Weight</div>
+              <span class="spcification-item-value">{{ specification.kerb_weight }}</span>
+            </div>
+          {% endif %}
+          {% if specification.mileage != blank %}
+            <div class="specification-item" data-specification-type="mileage">
+              <div class="specification-item-label h4">Mileage</div>
+              <span class="spcification-item-value">{{ specification.mileage }}</span>
+            </div>
+          {% endif %}
+          {% if specification.seating_capacity != blank %}
+            <div class="specification-item" data-specification-type="seating-capacity">
+              <div class="specification-item-label h4">Seating Capacity</div>
+              <span class="spcification-item-value">{{ specification.seating_capacity }}</span>
+            </div>
+          {% endif %}
+          {% if specification.tyre_size != blank %}
+            <div class="specification-item" data-specification-type="tire-size">
+              <div class="specification-item-label h4">Tire Size</div>
+              <span class="spcification-item-value">{{ specification.tyre_size }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Product Specifications",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Product Overview",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Specifications"
+    }
+  ]
+}
+{% endschema %}

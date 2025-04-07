@@ -1,0 +1,85 @@
+{{ 'live-support-mobile.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'live-support-mobile.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="live-support-mobile-page-width page-width">
+  <div class="live-support-mobile-section section-{{ section.id }}-padding">
+    <div class="container">
+      {% for i in (1..30) %}
+        <div class="horizontal-scrolling-items">
+          <div class="horizontal-scrolling-items__item">
+            <div class="enable-live-chat-wrapper-mobile">
+              <a
+                href="tel:{{ settings.contact_number }}"
+                class="link contact-number-main-link"
+                style="text-decoration: none;"
+                >.</a
+              >
+              <div class="live-chat-number-mobile">{{ settings.time }}</div>
+              <div class="live-chat-contact-number-mobile">
+                <a href="tel:{{ settings.contact_number }}" class="link" style="text-decoration: none;">
+                  UAN: {{- settings.contact_number | replace: "051" , ""-}}
+                </a>
+              </div>
+              <div class="live-chat-icon-wrapper-mobile hidden">
+                {% render "custom-icons": custom_icon: 'live-icon' %}
+                <span class="live-text-content-mobile">{{ settings.live_support_text }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Live Support Mobile",
+  "class": "Live Support Mobile medium-hide large-up-hide",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Live Support Mobile"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+.car-features-list {
+  list-style: none;
+  padding: unset;
+  display: flex;
+  flex-wrap: wrap;
+  vertical-align: middle;
+  row-gap: 2rem;
+}
+.feature-item {
+  display: flex;
+  /* flex-direction: column; */
+  @media (min-width: 750px) {
+    width: calc(33% - 10px);
+  }
+  @media (max-width: 749px) {
+    width: 50%;
+  }
+}
+.feature-item svg {
+  padding: 3px;
+}

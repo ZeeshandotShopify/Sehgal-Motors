@@ -1,0 +1,114 @@
+{% style %}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{{ 'collection-search-bar.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'collection-search-bar.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign custom_class = ''
+  if section.settings.use_custom_colors
+    assign custom_class = custom_class | append: ' rich-text--colored'
+  endif
+  if section.settings.horizontal_content
+    assign custom_class = custom_class | append: ' rich-text--horizontal'
+  endif
+-%}
+
+{%- if section.settings.show_divider %}<div class="section--divider">{% endif -%}
+<div class="page-width{% if section.settings.narrow %} page-width--inner{% endif %}">
+  <div class="rich-text collection-search-bar-section section-{{ section.id }}-padding {{ custom_class }}">
+    <!-- Search Bar -->
+    <div class="contenir">
+      <div class="collection-card-search-icon-wrapper">
+        {% render 'custom-icons', custom_icon: 'collection-search-icon' %}
+      </div>
+      <input
+        type="text"
+        class="collection-cards-search"
+        id="search-inp"
+        placeholder="Search"
+      >
+      <button class="collection-card-search-close-btn" id="search-inp-btn">
+        {% render 'custom-icons', custom_icon: 'collection-search-close' %}
+      </button>
+    </div>
+    <div
+      class="collections-tabs-desktop-wrapper medium-hide large-up-hide small-hide"
+      id="collection_tabs"
+    >
+      {% for collection in collections %}
+        <a href="{{ collection.url }}" class="collection-tab-link link">{{ collection.title }}</a>
+      {% endfor %}
+    </div>
+    <div class="loader"></div>
+  </div>
+</div>
+{%- if section.settings.show_divider %}</div>{% endif -%}
+
+{% schema %}
+{
+  "name": "Collection Search Bar",
+  "tag": "section",
+  "class": "section collection-search-bar-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "default": false,
+      "label": "Make section narrow"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "Show section divider"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+  ],
+  "presets": [
+    {
+      "name": "Collection Search Bar",
+      "blocks": [
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

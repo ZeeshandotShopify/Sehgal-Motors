@@ -1,0 +1,57 @@
+
+.collections_tabs-wrapper {
+    text-align: center;
+    max-width: 800px;
+    margin-inline: auto;
+    overflow: auto;
+    text-wrap: nowrap;
+}
+.collections_tabs-wrapper .sale-tag-button {
+    display: inline-block;
+    color: #23292F;
+    font-weight: 600;
+    font-size: 18px;
+    padding-inline: 1rem;
+    text-transform: capitalize;
+    opacity: 0.5;
+    cursor: pointer;
+    @media (min-width: 750px) {
+    font-size: 22px;      
+    }
+}
+.collections_tabs-wrapper .sale-tag-button:hover , .collections_tabs-wrapper .sale-tag-button.active-sale-tab {
+    opacity: 1;
+    color: #B73439;
+    position: relative;
+}
+.collections_tabs-wrapper .sale-tag-button.active-sale-tab:after {
+    content: " ";
+    position: absolute;
+    width: calc(100% - 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    height: 4px;
+    background-color: #B73439;
+    bottom: 0;
+}
+.collections_tabs-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.collections_tabs-wrapper {
+  scrollbar-gutter: stable;
+}
+.collections_tabs-wrapper::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+  height: 8px;
+}
+
+.collections_tabs-wrapper::-webkit-scrollbar-track {
+  background: #efefef; /* color of the tracking area */
+}
+
+.collections_tabs-wrapper::-webkit-scrollbar-thumb {
+  background-color: #23292f82; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+}

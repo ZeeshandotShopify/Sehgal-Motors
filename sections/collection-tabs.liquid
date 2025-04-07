@@ -1,0 +1,907 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+  button.cstm--tab--button.active {
+    border-color: black;
+    font-weight:600;
+  }
+  button.cstm--tab--button{
+      border-bottom: 1px solid gainsboro;
+      border-radius: 0;
+      margin-right: -5px;
+      text-transform: uppercase;
+      font-size: 1.6rem;
+      font-weight:400;
+  }
+  .cstm--tab--item{
+    display:none;
+  }
+  .cstm--tab--item.active{
+    display:block;
+  }
+  .cstm--gallery--grid{
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .cstm--grid--item{
+    width:50%;
+    padding:20px 10px;
+    overflow:hidden;
+  }
+  .cstm--grid--item img{
+    width:100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 1s ease;
+  }
+  .cstm--grid--item img:hover {
+    transform: scale(1.1);
+  }
+  .inner--item{
+    overflow:hidden;
+    height:7rem;
+  }
+  .cstm--grid--item p {
+    text-align: center;
+    font-weight: 700;
+  }
+  #shopify-section-{{ section.id }} .tabs--content--sec .cstm--tab--item > * {
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  
+  #shopify-section-{{ section.id }} .tabs--content--sec .cstm--tab--item.active > * {
+    animation: mymove 3s linear forwards;
+  }
+  .cstm--grid--item{
+    background:{{section.settings.card_bg | default : 'white'}};
+    border:1px solid #E7E7E7;
+  }
+  @keyframes mymove {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+  .cstm--tab--details p {
+      margin-bottom: 0;
+  }
+  .cstm--gallery--grid{
+    border-radius:10px;
+  }
+  .cstm--grid--item a{
+    text-decoration:none;
+    color:rgba(var(--color-foreground), 1);
+  }
+  .cstm--grid--item{
+   {% if section.settings.mobile_columns == "2" %}
+    width:50%;
+   {% elsif section.settings.mobile_columns == "1" %}
+    width:100%;
+   {% endif %}
+  }
+  @media screen and (min-width: 750px) {
+     .cstm--grid--item{
+       {% if section.settings.desktop_columns == 6 %}
+        width:16.6666%;
+       {% elsif section.settings.desktop_columns == 5 %}
+        width:20%;
+       {% elsif section.settings.desktop_columns == 4 %}
+        width:25%;
+       {% elsif section.settings.desktop_columns == 3 %}
+        width:33.33%;
+       {% elsif section.settings.desktop_columns == 2 %}
+        width:50%;
+       {% endif %}
+     }
+      .cstm--tab--item{
+        padding-top:30px;
+      }
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  @media (max-width:749px){
+  .cstm--collection--tabs--sec .title-wrapper--self-padded-mobile{
+    padding-left:0;
+  }
+  .cstm--tab--buttons {
+    display: flex;
+    /* flex-wrap: wrap; */
+    overflow-x:scroll;
+    row-gap: 10px;
+    justify-content: space-between;
+  }
+
+  .tabs--content--sec {
+    padding-top: 2rem;
+  }
+  button.cstm--tab--button{
+    min-width: fit-content;
+    margin-bottom: 10px;
+    /* margin-right:15px; */
+    padding: 9px 22px;
+  }
+}
+{%- endstyle -%}
+<div class="color-{{ section.settings.color_scheme }} gradient cstm--collection--tabs--sec">
+  <div class="collection-tabs-section-wrapper page-width isolate section-{{ section.id }}-padding">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper-with-link{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %} title-wrapper--no-top-margin">
+        <h2
+          id="SectionHeading-{{ section.id }}"
+          class="collection-tabs-title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        >
+          {{ section.settings.title }}
+        </h2>
+      </div>
+    {% endunless %}
+
+    <div class="cstm--collection--tabs">
+      <div class="cstm--tabs--sec">
+      <div class="cstm--tabs">
+        <div class="cstm--tab--buttons">
+          {% for block in section.blocks %}
+            <button class="cstm--tab--button button--tertiary button button--small tab--{{ forloop.index }} {% if forloop.index == 1 %}active{% endif %}"
+              style=" {% if forloop.index == 1 %}padding-left: 0;{% endif %}"
+              data-tab-index="{{ forloop.index }}" data-tab-type="{{ block.type }}" style="line-height:unset;">
+              {{ block.settings.tab_name }}
+            </button>
+          {% endfor %}
+        </div>
+        <div class="tabs--content--sec">
+        {% for block in section.blocks %}
+              <div class="cstm-gallery--tab cstm--tab--item tab--{{ forloop.index }} {% if forloop.index == 1 %}active{% endif %}" data-tab-index="{{ forloop.index }}">
+                <div class="cstm--tab--details">
+                  {{ block.settings.tab_content }}
+                  <div class="cstm--gallery--grid">
+                    {% if block.settings.collection1 != blank %}
+                      {% assign collection1 = block.settings.collection1 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection1.url }}">
+                        <div class="inner--item">
+                        <img src="{{ collection1.featured_image | img_url : 'master'}}">
+                        </div>
+                        <p>{{ collection1.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_one and block.settings.collection_name1 != blank %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link1 }}">
+                        <div class="inner--item">
+                        <img src="{{ block.settings.image_one | img_url : 'master'}}">
+                        </div>
+                        <p>{{ block.settings.collection_name1 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    
+                    {% if block.settings.collection2 != blank %}
+                      {% assign collection2 = block.settings.collection2 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection2.url }}">
+                        <div class="inner--item">
+                        <img src="{{ collection2.featured_image | img_url : 'master'}}">
+                        </div>
+                        <p>{{ collection2.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_two and block.settings.collection_name2 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link2 }}">
+                        <div class="inner--item">
+                        <img src="{{ block.settings.image_two | img_url : 'master'}}">
+                        </div>
+                        <p>{{ block.settings.collection_name2 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    
+                    {% if block.settings.collection3 != blank %}
+                      {% assign collection3 = block.settings.collection3 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection3.url }}">
+                        <div class="inner--item">
+                        <img src="{{ collection3.featured_image | img_url : 'master'}}">
+                        </div>
+                        <p>{{ collection3.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_three and block.settings.collection_name3 != blank %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link3 }}">
+                        <div class="inner--item">
+                        <img src="{{ block.settings.image_three | img_url : 'master'}}">
+                        </div>
+                        <p>{{ block.settings.collection_name3 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    
+                    
+                    {% if block.settings.collection4 != blank %}
+                      {% assign collection4 = block.settings.collection4 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection4.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection4.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection4.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_four and block.settings.collection_name4 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link4 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_four | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name4 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+                    
+                    {% if block.settings.collection5 != blank %}
+                      {% assign collection5 = block.settings.collection5 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection5.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection5.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection5.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_five and block.settings.collection_name5 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link5 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_five | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name5 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    
+                    {% if block.settings.collection6 != blank %}
+                      {% assign collection6 = block.settings.collection6 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection6.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection6.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection6.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_six and block.settings.collection_name6 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link6 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_six | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name6 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    
+                    {% if block.settings.collection7 != blank %}
+                      {% assign collection7 = block.settings.collection7 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection7.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection7.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection7.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_seven and block.settings.collection_name7 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link7 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_seven | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name7 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    
+                    {% if block.settings.collection8 != blank %}
+                      {% assign collection8 = block.settings.collection8 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection8.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection8.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection8.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_eight and block.settings.collection_name8 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link8 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_eight | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name8 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+
+                    {% if block.settings.collection9 != blank %}
+                      {% assign collection9 = block.settings.collection9 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection9.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection9.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection9.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_nine and block.settings.collection_name9 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link9 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_nine | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name9 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.collection10 != blank %}
+                      {% assign collection10 = block.settings.collection10 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection10.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection10.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection10.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_ten and block.settings.collection_name10 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link10 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_ten | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name10 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.collection11 != blank %}
+                      {% assign collection11 = block.settings.collection11 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection11.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection11.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection11.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_eleven and block.settings.collection_name11 != blank%}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link11 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_eleven | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name11 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.collection12 != blank %}
+                      {% assign collection12 = block.settings.collection12 %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ collection12.url }}">
+                        <div class="inner--item">
+                          <img src="{{ collection12.featured_image | img_url: 'master' }}">
+                        </div>
+                        <p>{{ collection12.title }}</p>
+                        </a>
+                      </div>
+                    {% else %}
+                      {% if block.settings.image_twelve and block.settings.collection_name12 != blank %}
+                      <div class="cstm--grid--item">
+                        <a href="{{ block.settings.collection_link12 }}">
+                        <div class="inner--item">
+                          <img src="{{ block.settings.image_twelve | img_url: 'master' }}">
+                        </div>
+                        <p>{{ block.settings.collection_name12 }}</p>
+                        </a>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+ 
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+  // Click event for tab buttons
+  $('.cstm--tab--button').click(function() {
+    // Remove 'active' class from all buttons and tabs
+    $('.cstm--tab--button').removeClass('active');
+    $('.cstm--tab--item').removeClass('active');
+    
+    // Add 'active' class to the clicked button
+    $(this).addClass('active');
+    
+    // Get the tab type from data attribute
+    var tabIndex = $(this).data('tab-index');
+    
+    // Add 'active' class to the corresponding tab item
+    $('.cstm--tab--item.tab--' + tabIndex).addClass('active');
+
+  });
+});
+</script>
+{% schema %}
+  {
+    "name": "Collection Tabs",
+    "blocks": [
+     {
+        "type": "Collection",
+        "name":"Collection",
+        "settings": [
+          {
+            "type": "text",
+            "id":"tab_name",
+            "label":"Tab Name",
+            "default":"Tab Name"
+          },{
+            "type": "richtext",
+            "id": "tab_content",
+            "label": "Tab Content"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection One"
+          },{
+            "type":"collection",
+            "id":"collection1",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_one",
+            "label":"Image One"
+          },{
+            "type":"text",
+            "id":"collection_name1",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link1",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Two"
+          },{
+            "type":"collection",
+            "id":"collection2",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_two",
+            "label":"Image Two"
+          },{
+            "type":"text",
+            "id":"collection_name2",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link2",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Three"
+          },{
+            "type":"collection",
+            "id":"collection3",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_three",
+            "label":"Image Three"
+          },{
+            "type":"text",
+            "id":"collection_name3",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link3",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Four"
+          },{
+            "type":"collection",
+            "id":"collection4",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_four",
+            "label":"Image Four"
+          },{
+            "type":"text",
+            "id":"collection_name4",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link4",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Five"
+          },{
+            "type":"collection",
+            "id":"collection5",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_five",
+            "label":"Image Five"
+          },{
+            "type":"text",
+            "id":"collection_name5",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link5",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Six"
+          },{
+            "type":"collection",
+            "id":"collection6",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_six",
+            "label":"Image Six"
+          },{
+            "type":"text",
+            "id":"collection_name6",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link6",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Seven"
+          },{
+            "type":"collection",
+            "id":"collection7",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_seven",
+            "label":"Image Seven"
+          },{
+            "type":"text",
+            "id":"collection_name7",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link7",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Eight"
+          },{
+            "type":"collection",
+            "id":"collection8",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_eight",
+            "label":"Image Eight"
+          },{
+            "type":"text",
+            "id":"collection_name8",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link8",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Nine"
+          },{
+            "type":"collection",
+            "id":"collection9",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_nine",
+            "label":"Image Nine"
+          },{
+            "type":"text",
+            "id":"collection_name9",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link9",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Ten"
+          },{
+            "type":"collection",
+            "id":"collection10",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_ten",
+            "label":"Image Eight"
+          },{
+            "type":"text",
+            "id":"collection_name10",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link10",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Eleven"
+          },{
+            "type":"collection",
+            "id":"collection11",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_eleven",
+            "label":"Image Eight"
+          },{
+            "type":"text",
+            "id":"collection_name11",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link11",
+            "label":"Collection Link"
+          }
+          
+          ,{
+            "type":"header",
+            "content":"Collection Twelve"
+          },{
+            "type":"collection",
+            "id":"collection12",
+            "label": "Collection"
+          },{
+            "type":"header",
+            "content":"Note: It will work if collection is not selected"
+          },{
+            "type": "image_picker",
+            "id":"image_twelve",
+            "label":"Image Eight"
+          },{
+            "type":"text",
+            "id":"collection_name12",
+            "label":"Collection Name",
+            "default":"Collection Name"
+          },{
+            "type":"url",
+            "id":"collection_link12",
+            "label":"Collection Link"
+          }
+        ]
+      }
+    ],
+    "settings": [
+      {
+        "type": "inline_richtext",
+        "id": "title",
+        "default": "Collections",
+        "label": "t:sections.collection-list.settings.title.label"
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "options": [
+          {
+            "value": "h2",
+            "label": "t:sections.all.heading_size.options__1.label"
+          },
+          {
+            "value": "h1",
+            "label": "t:sections.all.heading_size.options__2.label"
+          },
+          {
+            "value": "h0",
+            "label": "t:sections.all.heading_size.options__3.label"
+          }
+        ],
+        "default": "h1",
+        "label": "t:sections.all.heading_size.label"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "t:sections.all.colors.label",
+        "info": "t:sections.all.colors.has_cards_info",
+        "default": "scheme-1"
+      },{
+        "type": "color",
+        "id":"card_bg",
+        "label":"Cards Background",
+        "default":"#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "desktop_columns",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "label": "Desktop Columns",
+        "default": 6
+      },
+      {
+        "type": "select",
+        "id": "mobile_columns",
+        "options": [
+          {"label": "1 Column","value": "1"},
+          {"label":"2 Columns","value": "2"}
+        ],
+        "label": "Mobile Columns",
+        "default": "2"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 36
+      },{
+      "type":"header",
+      "content":"Padding Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 20
+    }
+    ],
+    "presets": [
+      {
+        "name":"Collection Tabs"
+      }
+    ]
+  }
+{% endschema %}

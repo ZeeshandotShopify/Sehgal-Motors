@@ -1,0 +1,105 @@
+.product--thumbnail_slider .slider-mobile-gutter .slider-button {
+  width: 0px;
+  height: 0px;
+  padding: unset;
+  overflow: hidden;
+  visibility: hidden;
+}
+@media screen and (min-width: 990px) {
+  .product--medium:not(.product--no-media) .product__media-wrapper,
+  .product--small:not(.product--no-media) .product__info-wrapper {
+    /* max-height: 550px; */
+    /* overflow: hidden; */
+  }
+}
+@media (min-width: 1250px) {
+  .main-product-section .product__column-sticky {
+    top: 145px;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    .product__media-wrapper
+    .product__column-sticky {
+    display: grid;
+    grid-template-columns: 12% 1fr;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    slider-component.slider-mobile-gutter {
+    grid-column-start: 2;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    slider-component.thumbnail-slider {
+    grid-column-start: 1;
+    grid-row: 1;
+    max-height: 430px;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    .thumbnail-slider
+    .thumbnail-list.slider--tablet-up {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    flex: unset;
+    max-height: 100dvh;
+    overflow-y: scroll;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    .thumbnail-slider
+    .thumbnail-list.slider--tablet-up::-webkit-scrollbar {
+    display: none;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    .thumbnail-list.slider--tablet-up
+    .thumbnail-list__item.slider__slide {
+    width: 100%;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    .product--thumbnail
+    .product__media-list,
+  .main-product-section
+    .product-with-thumbnails
+    .product--thumbnail_slider
+    .product__media-list,
+  .main-product-section .product-with-thumbnails .product__media-list {
+    margin: 0px;
+  }
+  .main-product-section
+    .product-with-thumbnails
+    .product-media-container
+    .media,
+  .main-product-section .product-with-thumbnails .product__modal-opener,
+  .main-product-section .product-with-thumbnails .product-media-container,
+  .main-product-section .product-with-thumbnails .product__media-list {
+    height: 100%;
+  }
+}
+.product-media-container .media {
+  padding-top: unset;
+  height: 50dvh;
+  max-height: 400px;
+  min-height: 400px;
+  img {
+    object-fit: contain;
+  }
+}
+
+
+.list-view-price-loader{
+  height: 4px;
+  width: 80px;
+  --c:no-repeat linear-gradient(#000000 0 0);
+  background: var(--c),var(--c),#efefef;
+  background-size: 60% 100%;
+  animation: l16 3s infinite;
+}
+@keyframes l16 {
+  0%   {background-position:-150% 0,-150% 0}
+  66%  {background-position: 250% 0,-150% 0}
+  100% {background-position: 250% 0, 250% 0}
+}

@@ -1,0 +1,180 @@
+.featured-collections-section {
+  .title , .title:not(:only-child) {
+    margin: 0;
+  }
+  @media screen and (min-width: 990px) {
+    .title , .title:not(:only-child){
+      margin: 0;
+    }
+  }
+  .collection__title.title-wrapper {
+    @media (max-width: 750px) {
+      margin-top: 2rem;
+    }
+  }
+      .collection__view-all a:not(.link) {
+        margin: unset;
+      }
+  @media (min-width: 750px) {  }
+    .content--cstm--col {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+      .collection__view-all a:not(.link) {
+        margin: unset;
+      }
+    }
+   .content--cstm--col:not(.view-all-link-and-title-wrapper) {
+     justify-content: space-between;
+   }
+   .view-all-link-and-title-wrapper {
+     column-gap: 2rem;
+     .link {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+     }
+   }
+}
+[data-layout="product-layout-grid"] {
+  .card__heading {
+    a {
+      cursor: pointer;
+    }
+  }
+}
+@media (min-width: 990px) {
+  [data-layout="product-layout-grid"] .card__information {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+  [data-layout="product-layout-grid"] .card__content {
+    padding-inline: unset;
+    padding-bottom: 0px;
+  }
+  [data-layout="product-layout-grid"] .card-custom-fields-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    row-gap: 1rem;
+    justify-content: space-between;
+    padding-inline: 0rem;
+    margin-top: 0.7rem;
+  }
+  [data-layout="product-layout-grid"] .contact-info-wrapper {
+    padding-inline: 0rem;
+    margin-top: 1.5rem;
+  }
+  [data-layout="product-layout-grid"]
+    .contact-info-wrapper
+    .button-primary.button {
+    padding: 1rem;
+    min-width: 100%;
+    min-height: unset;
+  }
+  [data-layout="product-layout-grid"] .card__information {
+    padding-inline: unset;
+  }
+  ul#product-grid[data-layout="product-layout-grid"] {
+    row-gap: 3rem;
+  }
+  [data-layout="product-layout-grid"] .contact-info-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  #product-grid[data-layout="product-layout-grid"] li {
+    box-shadow: 0 0 5px #0003;
+    padding: 1rem;
+  }
+  #product-grid[data-layout="product-layout-grid"] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  #product-grid[data-layout="product-layout-grid"]
+    .card--card.card--media
+    > .card__content {
+    justify-content: space-between;
+  }
+}
+
+#product-grid .used-car-featured-badge-color {
+  background-color: #b73439;
+  color: #ffffff;
+}
+@media (min-width: 1600px) {
+  #product-grid[data-layout="product-layout-grid"] {
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+  }
+}
+#product-grid {
+  margin-bottom: 6rem;
+}
+.load-more-button-wrapper .button-primary {
+  background-color: #23292f;
+  border-color: #23292f;
+  box-shadow: unset;
+}
+.load-more-button-wrapper button::after {
+  z-index: unset;
+}
+/* HTML: <div class="loader"></div> */
+.load-more-button-wrapper button {
+  width: 50px;
+  aspect-ratio: 1;
+  color: #b73439;
+  border-radius: 50%;
+  display: grid;
+  background: conic-gradient(from 90deg at 4px 4px, #0000 90deg, currentColor 0) -4px -4px /
+      calc(50% + 2px) calc(50% + 2px),
+    radial-gradient(
+        farthest-side,
+        currentColor 6px,
+        #0000 7px calc(100% - 6px),
+        currentColor calc(100% - 5px)
+      )
+      no-repeat;
+  animation: l10 2s infinite linear;
+  position: absolute;
+  left: 50%;
+  margin: -3rem;
+  border: unset;
+  position: relative;
+}
+.load-more-button-wrapper button:before {
+  content: "";
+  border-radius: inherit;
+  background: inherit;
+  transform: rotate(45deg);
+}
+@keyframes l10 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
+
+/* price loader  */
+
+/* HTML: <div class="loader"></div> */
+.list-view-price-loader {
+  height: 4px;
+  width: 80px;
+  --c: no-repeat linear-gradient(#000000 0 0);
+  background: var(--c), var(--c), #efefef;
+  background-size: 60% 100%;
+  animation: l16 3s infinite;
+}
+@keyframes l16 {
+  0% {
+    background-position: -150% 0, -150% 0;
+  }
+  66% {
+    background-position: 250% 0, -150% 0;
+  }
+  100% {
+    background-position: 250% 0, 250% 0;
+  }
+}

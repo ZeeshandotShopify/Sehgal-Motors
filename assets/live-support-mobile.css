@@ -1,0 +1,53 @@
+@keyframes infiniteScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.enable-live-chat-wrapper-mobile {
+  position: relative;
+  .contact-number-main-link {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    text-indent: -99999px;
+  }
+}
+.live-support-mobile-section .container {
+  width: 100%;
+  overflow-x: hidden;
+}
+.horizontal-scrolling-items {
+  display: flex;
+  /* font-size: 40px; */
+  width: 2600px;
+  animation-name: infiniteScroll;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  .link {
+    color: #ffffff;
+  }
+}
+.horizontal-scrolling-items__item {
+  white-space: nowrap;
+}
+.enable-live-chat-wrapper-mobile {
+  display: flex;
+  gap: 1rem;
+}
+.live-support-mobile-section .container {
+  display: flex;
+  gap: 1rem;
+}
+.live-support-mobile-page-width {
+  background-color: #b73439;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0;
+  padding: unset;
+}

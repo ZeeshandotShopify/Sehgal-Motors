@@ -1,0 +1,133 @@
+.footer-block .footer--contact--det--item {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+.footer-block .footer--contact--det--item > * {
+  color: #ffffff;
+  width: 100%;
+}
+.footer-block .footer--contact--det--item {
+  line-height: 1;
+  .rte a {
+    color: #ffffff;
+  }
+  .typeset {
+    color: #ffffff;
+    font-size: max(100%);
+    line-height: 1;
+  }
+}
+.footer-block__details-content .list-menu__item--link {
+  color: #ffffff;
+  font-size: max(100%);
+  line-height: 1;
+}
+@media (min-width: 750px) {
+  .footer-block__details-content > li:not(:last-child) {
+    margin-right: 1.5rem;
+    margin-bottom: 0rem;
+  }
+  .footer-block__details-content .list-menu__item--link {
+    color: #ffffff;
+    font-size: max(100%);
+    padding: unset;
+    line-height: 1;
+  }
+  .footer-block .footer--contact--det--item {
+    line-height: 1;
+    .rte a {
+      color: #ffffff;
+    }
+    .typeset {
+      color: #ffffff;
+      font-size: max(100%);
+      padding: unset;
+      line-height: 1;
+    }
+  }
+}
+@media (max-width: 1050px) {
+  .footer__content-bottom-wrapper.cstm--copyright--wrapper {
+    margin-top: unset;
+  }
+}
+.footer__content-bottom {
+  background-color: #23292f;
+  color: #ffff;
+}
+.copyright__content a:hover {
+  color: #ffffff;
+}
+
+.footer--contact--social--item .footer__list-social.list-social:only-child {
+  justify-content: flex-start;
+  padding: unset;
+  gap: 1rem;
+}
+
+.footer--contact--social--item {
+  .list-social__item .icon {
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+  }
+}
+.footer--contact--social--item .list-social__link {
+  padding: unset;
+}
+.footer--contact--social--item {
+  margin-top: 1rem;
+}
+#whatsapp-icon {
+  position: fixed;
+  right: 2%;
+  bottom: 20px;
+  a {
+    text-decoration: none;
+    color: transparent;
+    border-radius: calc(infinity * 1px);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      /* border-radius: calc(infinity * 1px); */
+    }
+  }
+  @media (max-width: 750px) {
+    right: 5%;
+  }
+}
+div#back_to_top {
+  position: fixed;
+  right: 2%;
+  bottom: 80px;
+  @media (max-width: 750px) {
+    right: 5%;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+.sr-only {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+}
+
+.top-btn {
+    display: flex;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    position: relative;
+    background-color: #B73439;
+    box-shadow: 0 0 10px #B73439;
+    overflow: hidden;
+}
+

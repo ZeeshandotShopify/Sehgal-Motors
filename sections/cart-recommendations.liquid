@@ -1,0 +1,55 @@
+{{ 'cart-recommendations.css' | asset_url | stylesheet_tag }}
+
+{% comment %} DO NOT USE IT IN SECTIONS BECAUSE WE ARE USING IT INSIDE THE CART DRAWER FROM JAVASCRIPT{% endcomment %}
+
+<cart-recommendations
+  class="cart-recommendations"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ cart.items.first.product_id }}&limit=4"
+>
+  <h2 class="mini-cart-title drawer__heading h3">You May also Like</h2>
+  <div class="cart-recommendation-wrapper">
+    <div class="cart-recommendation-title h5">{{ settings.cart_recommendations_heading | escape }}</div>
+    <ul class="mini-cart-recommendations small-hide">
+      {%- for recommendation in recommendations.products -%}
+        <li class="recommendation__item">
+          {% render 'cart-card-product',
+            card_product: recommendation,
+            media_aspect_ratio: 'cart-item__image',
+            image_shape: 'default',
+            show_secondary_image: false,
+            show_vendor: false,
+            show_rating: false,
+            quick_add: 'standard'
+          %}
+        </li>
+      {%- endfor -%}
+    </ul>
+    <div class="mini-cart-swiper-initialize  large-up-hide medium-hide">
+      <ul class="mini-cart-recommendations swiper-wrapper">
+        {%- for recommendation in recommendations.products -%}
+          <li class="swiper-slide">
+            <div class="recommendation__item">
+              {% render 'cart-card-product',
+                card_product: recommendation,
+                media_aspect_ratio: 'cart-item__image',
+                image_shape: 'default',
+                show_secondary_image: false,
+                show_vendor: false,
+                show_rating: false,
+                quick_add: 'standard'
+              %}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</cart-recommendations>
+{% schema %}
+{
+  "name": "Cart recommendation",
+  "settings": []
+}
+{% endschema %}

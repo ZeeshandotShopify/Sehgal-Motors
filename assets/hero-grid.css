@@ -1,0 +1,191 @@
+.hero-grid-section {
+  background-color: transparent;
+}
+.hero-blocks-inner {
+  display: flex;
+  gap: 1rem;
+  max-height: 600px;
+}
+.hero-media-wrapper {
+  height: 100%;
+  border-radius: 12px;
+  position: relative;
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    line-height: 1;
+    border-radius: 12px;
+  }
+}
+.hero-media-wrapper:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000050;
+  border-radius: 12px;
+}
+.hero-grid-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  line-height: 1;
+  border-radius: 12px;
+}
+.hero-column-left:not(.hero-grid-swiper-initialize .hero-column-left) {
+  width: 70%;
+  max-height: 65dvh;
+  position: relative;
+}
+.hero-grid-swiper-initialize .hero-column-left {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.hero-column-right:not(.hero-grid-swiper-initialize .hero-column-right) {
+  width: 30%;
+  max-height: 65dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.hero-grid-swiper-initialize .hero-column-right {
+  width: 100%;
+}
+.hero-column-right-top:not(.hero-grid-swiper-initialize .hero-column-right-top),
+.hero-column-right-bottom:not(
+    .hero-grid-swiper-initialize .hero-column-right-bottom
+  ) {
+  height: calc(100% / 2 - 0.5rem);
+  position: relative;
+}
+.hero-grid-swiper-initialize .hero-column-right-top,
+.hero-grid-swiper-initialize .hero-column-right-bottom {
+  position: relative;
+}
+.hero-info-block-wrapper {
+  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5rem;
+  z-index: 2;
+}
+.social-proff-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 1;
+  gap: 1rem;
+}
+.social-proff-text {
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 1.2em;
+}
+.hero-grid-heading-wrapper .hero-heading {
+  color: #fff;
+  margin-block: 1rem;
+}
+.hero-cta-wrapper {
+  margin-top: 3.5rem;
+}
+.hero-cta-wrapper .button {
+  background-color: #b73439;
+  box-shadow: unset;
+  border: unset;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+.hero-cta-wrapper .button:after,
+.hero-cta-wrapper .button:before,
+.hero-cta-wrapper .button:not([disabled]):hover:after {
+  box-shadow: unset;
+}
+.hero-cta-wrapper .button:hover {
+  background-color: #dc464c;
+}
+.hero-sub-heading {
+  color: #ffffff;
+  line-height: 1;
+  margin: unset;
+}
+.hero-column-right .hero-info-block-wrapper {
+  left: 2.5rem;
+  max-width: 80%;
+}
+.hero-grid-swiper-initialize .swiper-slide {
+  height: auto !important;
+}
+.hero-grid-page-width {
+  position: relative;
+  overflow: hidden;
+  padding-block: 1rem;
+}
+@media (min-width: 750px) {
+  .hero-cta-wrapper {
+    margin-top: 5rem;
+  }
+}
+@media (max-width: 750px) {
+  .hero-info-block-wrapper {
+    left: 2rem;
+  }
+  .hero-grid-swiper-initialize .swiper-slide {
+    height: 50dvh !important;
+  }
+  .hero-grid-swiper-initialize .hero-column-right-top,
+  .hero-grid-swiper-initialize .hero-column-right-bottom {
+    position: relative;
+    height: 100%;
+  }
+  .hero-sub-heading {
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1;
+    vertical-align: middle;
+    font-size: 1.2em;
+  }
+}
+.hero-grid-swiper-initialize .swiper-pagination {
+  position: relative;
+  bottom: -1rem;
+  .swiper-pagination-bullet-active {
+    background-color: #dc464c;
+  }
+}
+.hero-column-right-top,
+.hero-column-right-bottom {
+  position: relative;
+}
+.hero-column-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  display: block;
+  text-indent: -999px;
+  opacity: 0;
+}
+.hero-column-link:hover
+  + .hero-media-wrapper
+  + .hero-info-block-wrapper
+  .hero-cta-wrapper
+  .button {
+  background-color: #dc464c;
+}
+/* quicklinks-infinite {
+  display: inline-block;
+} */

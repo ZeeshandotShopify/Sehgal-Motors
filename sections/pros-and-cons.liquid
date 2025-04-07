@@ -1,0 +1,160 @@
+{{ 'pros-and-cons.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{% if product.metafields.custom.product_pros.value.size > 0 or product.metafields.custom.product_cons.value.size > 0 %}
+  {% if product.tags contains 'new car' or product.tags contains 'new cars' or product.tags contains 'New Car' %}
+    <div class="pros-and-cons color-{{ section.settings.color_scheme }} gradient{% if section.settings.title == blank %} no-heading{% endif %}">
+      <div
+        class="page-width page--width--cstm  product-page-page-width   product-page-with-thumbnails-page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
+        {%- unless section.settings.title == blank -%}
+          <div class="title-wrapper-with-link title-wrapper--no-top-margin section__title">
+            <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+              {{ section.settings.title }}
+            </h2>
+          </div>
+        {%- endunless -%}
+        <div class="pros-and-cons-container">
+          <div class="pros-and-cons-inner">
+            <div class="pros-container">
+              <div class="pros-container-header">
+                <span class="pros-header-icon">{% render 'custom-icons': custom_icon: 'thumbs-up' %}</span>
+                <span class="pros-header h3">{{ section.settings.pro_label }}</span>
+              </div>
+              <div class="pros-pointer-wrapper">
+                {% for item in product.metafields.custom.product_pros.value %}
+                  <p class="pros-item">
+                    <span class="pros-check-icon">{% render 'custom-icons': custom_icon: 'pros-check' %}</span
+                    ><span class="pros-item-text">{{ item }}</span>
+                  </p>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="cons-container">
+              <div class="cons-container-header">
+                <span class="cons-header-icon">{% render 'custom-icons': custom_icon: 'thumbs-down' %}</span>
+                <span class="cons-header h3">{{ section.settings.cons_label }}</span>
+              </div>
+              <div class="cons-pointer-wrapper">
+                {% for item in product.metafields.custom.product_cons.value %}
+                  <p class="cons-item">
+                    <span class="cons-check-icon">{% render 'custom-icons': custom_icon: 'cons-cross' %}</span
+                    ><span class="cons-item-text">{{ item }}</span>
+                  </p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+{% schema %}
+{
+  "name": "Pros & Cons",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Pros and Cons",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "pro_label",
+      "label": "Pro Cons Label",
+      "default": "What we like"
+    },
+    {
+      "type": "text",
+      "id": "cons_label",
+      "label": "Cons Label",
+      "default": "What we don't like"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pros & Cons"
+    }
+  ]
+}
+{% endschema %}

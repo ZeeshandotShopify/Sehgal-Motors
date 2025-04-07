@@ -1,0 +1,71 @@
+<span class="field-currency">{{ cart.currency.symbol }}</span>
+
+<div class="field">
+  <input
+    class="field__input"
+    name="{{ filter.min_value.param_name }}"
+    id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
+    {%- if filter.min_value.value -%}
+      value="{{ filter.min_value.value | money_without_currency }}"
+    {%- endif -%}
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    data-pattern="\d| |,|\."
+    data-min="0"
+    data-max="{{ filter.range_max | money_without_currency }}"
+  >
+  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-GTE">
+    {{- 'products.facets.from' | t -}}
+  </label>
+</div>
+
+{%- if filter_type != 'vertical' -%}
+  <span class="field-currency">{{ cart.currency.symbol }}</span>
+{%- endif -%}
+
+<div class="field">
+  <input
+    class="field__input"
+    name="{{ filter.max_value.param_name }}"
+    id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
+    {%- if filter.max_value.value -%}
+      value="{{ filter.max_value.value | money_without_currency }}"
+    {%- endif -%}
+    type="text"
+    inputmode="decimal"
+    placeholder="{{ filter.range_max | money_without_currency }}"
+    data-pattern="\d| |,|\."
+    data-min="0"
+    data-max="{{ filter.range_max | money_without_currency }}"
+  >
+  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-LTE">
+    {{- 'products.facets.to' | t -}}
+  </label>
+</div>
+<!--
+  <div class="price-range__sliders relative no-js-hidden">
+    <label class="visually-hidden" for="price-range-slider-min">
+      {{- 'products.filtering.min_price_label' | t | escape -}}
+    </label>
+    <input type="range"
+           class="price-range__slider-input m-0"
+           id="price-range-slider-min"
+           value="{% if filter.min_value.value %}{{ min_value }}{% else %}0{% endif %}"
+           min="0"
+           max="{{ range_max }}"
+           step="1"
+           tabindex="-1">
+    <label class="visually-hidden" for="price-range-slider-max">
+      {{- 'products.filtering.max_price_label' | t | escape -}}
+    </label>
+    <input type="range"
+           class="price-range__slider-input m-0"
+           id="price-range-slider-max"
+           value="{% if filter.max_value.value %}{{ max_value }}{% else %}{{ range_max }}{% endif %}"
+           min="0"
+           max="{{ range_max }}"
+           step="1"
+           tabindex="-1">
+  </div>
+-->

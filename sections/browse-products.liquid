@@ -1,0 +1,641 @@
+{{ 'browse-cars.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'browse-cars.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="browse-products-by-tabs-container page-width">
+  <div class="browse-products-by-tabs-section-padding section-{{ section.id }}-padding">
+    <div class="browse-by-products-title">
+      {%- if section.settings.title != blank -%}
+        <h2 class="title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+
+      <div class="browse-by-cars-tabs-wrapper">
+        <div class="browse-by-cars-tabs-initialized">
+          <div class="swiper-wrapper-custom-tab">
+            {% assign car_browse_activetab = false %}
+            {% if section.settings.category != blank %}
+              <div class="swiper-slide-tab">
+                <span
+                  class="browse-car-label {% if car_browse_activetab != true %} active {% assign car_browse_activetab = true %} {% endif %}"
+                  data-label="{{ section.settings.category }}"
+                >
+                  {{- section.settings.category -}}
+                </span>
+              </div>
+            {% endif %}
+            {% if section.settings.make != blank %}
+              <div class="swiper-slide-tab">
+                <span
+                  class="browse-car-label {% if car_browse_activetab != true %} active {% assign car_browse_activetab = true %} {% endif %}"
+                  data-label="{{ section.settings.make }}"
+                >
+                  {{- section.settings.make -}}
+                </span>
+              </div>
+            {% endif %}
+            {% if section.settings.brand != blank %}
+              <div class="swiper-slide-tab">
+                <span
+                  class="browse-car-label {% if car_browse_activetab != true %} active {% assign car_browse_activetab = true %} {% endif %}"
+                  data-label="{{ section.settings.brand }}"
+                >
+                  {{- section.settings.brand -}}
+                </span>
+              </div>
+            {% endif %}
+            {% if section.settings.Budget != blank %}
+              <div class="swiper-slide-tab">
+                <span
+                  class="browse-car-label {% if car_browse_activetab != true %} active {% assign car_browse_activetab = true %} {% endif %}"
+                  data-label="{{ section.settings.Budget }}"
+                >
+                  {{- section.settings.Budget -}}
+                </span>
+              </div>
+            {% endif %}
+            {% if section.settings.body_type != blank %}
+              <div class="swiper-slide-tab">
+                <span
+                  class="browse-car-label {% if car_browse_activetab != true %} active {% assign car_browse_activetab = true %} {% endif %}"
+                  data-label="{{ section.settings.body_type }}"
+                >
+                  {{- section.settings.body_type -}}
+                </span>
+              </div>
+            {% endif %}
+            {% if section.settings.model != blank %}
+              <div class="swiper-slide-tab">
+                <span
+                  class="browse-car-label {% if car_browse_activetab != true %} active {% assign car_browse_activetab = true %} {% endif %}"
+                  data-label="{{ section.settings.model }}"
+                >
+                  {{- section.settings.model -}}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="browse-by-cars-tab-next swiper-button-next">
+            {% render 'custom-icons': custom_icon: 'browse-tab-next' %}
+          </div>
+          <div class="browse-by-cars-tab-prev swiper-button-prev">
+            {% render 'custom-icons': custom_icon: 'browse-tab-prev' %}
+          </div>
+        </div>
+        {% comment %}
+          <div class="browse-by-cars-tabs-dummy-prev">
+            <div class="browse-by-cars-dummy-prev-link"><span class="visually-hidden">dummy-prev-link</span></div>
+            {% render 'custom-icons': custom_icon: 'browse-tab-prev' %}
+          </div>
+          <div class="browse-by-cars-tabs-dummy-next">
+            <div class="browse-by-cars-dummy-next-link"><span class="visually-hidden">dummy-next-link</span></div>
+            {% render 'custom-icons': custom_icon: 'browse-tab-next' %}
+          </div>
+        {% endcomment %}
+      </div>
+
+      <!-- Tab ends here -->
+      {% if section.blocks.size > 1 %}
+        <div class="browse-by-cars-container">
+          {% assign car_browse_activecontainer = false %}
+          <!-- category container -->
+          {% if section.settings.category != blank or section.settings.category != ' ' %}
+            <div
+              class="browse-by-cars-category-container {% if car_browse_activecontainer != true %} active {% assign car_browse_activecontainer = true %} {% endif %}"
+              id="browse-by-cars-{{ section.settings.category | downcase }}-container"
+              data-container-type="tab-container"
+              {% if section.settings.category != blank %}
+              data-container-label="{{ section.settings.category | downcase | handleize}}"
+              {% endif %}
+            >
+              <div class="browse-by-cars-category-swiper-initialize">
+                <div class="swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when 'category-card' %}
+                        {% for collection in block.settings.collections %}
+                        <div class="swiper-slide">
+                            <a href="{{ collection.url }}" class="browse-car-card-url"
+                              ><span class="visually-hidden">{{ collection.title }}</span></a
+                            >
+                          
+                          <div class="block-content-wrapper">
+                            {% if collection.metafields.custom.icon %}
+                              <div class="block-image-icon-wrapper">
+                                {{
+                                  collection.metafields.custom.icon
+                                  | image_url: width: '100'
+                                  | image_tag: class: 'browse-by-icon'
+                                }}
+                              </div>
+                            {% endif %}
+                            <div class="block-label-wrapper">
+                              <span class="h4">{{ collection.title }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="browse-by-cars-category-next swiper-button-next">
+                  {% render 'custom-icons': custom_icon: 'browse-cars-containers-next' %}
+                </div>
+                <div class="browse-by-cars-category-prev swiper-button-prev">
+                  {% render 'custom-icons': custom_icon: 'browse-cars-containers-prev' %}
+                </div>
+              </div>
+              <!-- <div class="browse-by-cars-category-dummy-prev">
+                <div class="browse-by-cars-category-dummy-prev-link">
+                  <span class="visually-hidden">dummy-prev-link</span>
+                </div>
+                {% render 'custom-icons': custom_icon: 'browse-cars-containers-prev' %}
+              </div>
+              <div class="browse-by-cars-category-dummy-next">
+                <div class="browse-by-cars-category-dummy-next-link">
+                  <span class="visually-hidden">dummy-next-link</span>
+                </div>
+                {% render 'custom-icons': custom_icon: 'browse-cars-containers-next' %}
+              </div> -->
+            </div>
+          {% endif %}
+          <!-- Make -->
+          {% if section.settings.make != blank or section.settings.make != ' ' %}
+            <div
+              class="browse-by-cars-make-container {% if car_browse_activecontainer != true %} active {% assign car_browse_activecontainer = true %} {% endif %}"
+              id="browse-by-cars-{{ section.settings.make | downcase }}-container"
+              data-container-type="tab-container"
+              {% if section.settings.make != blank %}
+              data-container-label="{{ section.settings.make | downcase | handleize}}"
+              {% endif %}
+            >
+              <div class="browse-by-cars-make-swiper-initialize">
+                <div class="swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when 'make' %}
+                        {% for collection in block.settings.collections %}
+                        <div class="swiper-slide">
+                            <a href="{{ collection.url }}" class="browse-car-card-url"
+                              ><span class="visually-hidden">{{ collection.title }}</span></a
+                            >
+                          
+                          <div class="block-content-wrapper">
+                            {% if collection.metafields.custom.icon %}
+                              <div class="block-image-icon-wrapper">
+                                {{
+                                  collection.metafields.custom.icon
+                                  | image_url: width: '100'
+                                  | image_tag: class: 'browse-by-icon'
+                                }}
+                              </div>
+                            {% endif %}
+                            <div class="block-label-wrapper">
+                              <span class="h4">{{ collection.title }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          {% endif %}
+          <!-- Brand -->
+          {% if section.settings.brand != blank or section.settings.brand != ' ' %}
+            <div
+              class="browse-by-cars-brand-container {% if car_browse_activecontainer != true %} active {% assign car_browse_activecontainer = true %} {% endif %}"
+              id="browse-by-cars-{{ section.settings.brand | downcase }}-container"
+              data-container-type="tab-container"
+              {% if section.settings.brand != blank %}
+              data-container-label="{{ section.settings.brand | downcase | handleize}}"
+              {% endif %}
+            >
+              <div class="browse-by-cars-brand-swiper-initialize">
+                <div class="swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when 'brand' %}
+                        {% for collection in block.settings.collections %}
+                        <div class="swiper-slide">
+                            <a href="{{ collection.url }}" class="browse-car-card-url"
+                              ><span class="visually-hidden">{{ collection.title }}</span></a
+                            >
+                          
+                          <div class="block-content-wrapper">
+                            {% if collection.metafields.custom.icon %}
+                              <div class="block-image-icon-wrapper">
+                                {{
+                                  collection.metafields.custom.icon
+                                  | image_url: width: '100'
+                                  | image_tag: class: 'browse-by-icon'
+                                }}
+                              </div>
+                            {% endif %}
+                            <div class="block-label-wrapper">
+                              <span class="h4">{{ collection.title }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          {% endif %}
+          <!-- Budget -->
+          {% if section.settings.Budget != blank or section.settings.Budget != ' ' %}
+            <div
+              class="browse-by-cars-budget-container {% if car_browse_activecontainer != true %} active {% assign car_browse_activecontainer = true %} {% endif %}"
+              id="browse-by-cars-{{ section.settings.Budget | downcase }}-container"
+              data-container-type="tab-container"
+              {% if section.settings.Budget != blank %}
+              data-container-label="{{ section.settings.Budget | downcase | handleize }}"
+              {% endif %}
+            >
+              <div class="browse-by-cars-budget-swiper-initialize">
+                <div class="swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when 'budget' %}
+                        {% for collection in block.settings.collections %}
+                        <div class="swiper-slide">
+                            <a href="{{ collection.url }}" class="browse-car-card-url"
+                              ><span class="visually-hidden">{{ collection.title }}</span></a
+                            >
+                          
+                          <div class="block-content-wrapper">
+                            <div class="block-label-wrapper">
+                              <span class="h4">{{ collection.title }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          {% endif %}
+          <!-- body-type -->
+          {% if section.settings.body_type != blank or section.settings.body_type != ' ' %}
+            <div
+              class="browse-by-cars-body-type-container {% if car_browse_activecontainer != true %} active {% assign car_browse_activecontainer = true %} {% endif %}"
+              id="browse-by-cars-{{ section.settings.body_type | downcase | handleize }}-container"
+              data-container-type="tab-container"
+              {% if section.settings.body_type != blank %}
+              data-container-label="{{ section.settings.body_type | downcase | handleize }}"
+              {% endif %}
+            >
+              <div class="browse-by-cars-body-type-swiper-initialize">
+                <div class="swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when 'body-type' %}
+                        {% for collection in block.settings.collections %}
+                        <div class="swiper-slide">
+                            <a href="{{ collection.url }}" class="browse-car-card-url"
+                              ><span class="visually-hidden">{{ collection.title }}</span></a
+                            >
+                          
+                          <div class="block-content-wrapper">
+                            {% if collection.metafields.custom.icon %}
+                              <div class="block-image-icon-wrapper">
+                                {{
+                                  collection.metafields.custom.icon
+                                  | image_url: width: '100'
+                                  | image_tag: class: 'browse-by-icon'
+                                }}
+                              </div>
+                            {% endif %}
+                            <div class="block-label-wrapper">
+                              <span class="h4">{{ collection.title }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          {% endif %}
+          <!-- model -->
+          {% if section.settings.model != blank or section.settings.model != ' ' %}
+            <div
+              class="browse-by-cars-model-container {% if car_browse_activecontainer != true %} active {% assign car_browse_activecontainer = true %} {% endif %}"
+              id="browse-by-cars-{{ section.settings.model | downcase }}-container"
+              data-container-type="tab-container"
+              {% if section.settings.model != blank %}
+              data-container-label="{{ section.settings.model | downcase | handleize }}"
+              {% endif %}
+            >
+              <div class="browse-by-cars-model-swiper-initialize">
+                <div class="swiper-wrapper">
+                  {% for block in section.blocks %}
+                    {% case block.type %}
+                      {% when 'model' %}
+                        {% for collection in block.settings.collections %}
+                        <div class="swiper-slide">
+                            <a href="{{ collection.url }}" class="browse-car-card-url"
+                              ><span class="visually-hidden">{{ collection.title }}</span></a
+                            >
+                          
+                          <div class="block-content-wrapper">
+                            <div class="block-label-wrapper">
+                              <span class="h4">{{ collection.title }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                    {% endcase %}
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Browse Products By Tabs",
+  "class": "browse-products-by-tabs-section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Section Title",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "header",
+      "content": "Category"
+    },
+    {
+      "type": "text",
+      "id": "category",
+      "label": "Label",
+      "default": "category",
+      "info": "Should only be category , make , brand , budget , body_type , model"
+    },
+    {
+      "type": "header",
+      "content": "Make"
+    },
+    {
+      "type": "text",
+      "id": "make",
+      "label": "Label",
+      "default": "Make",
+      "info": "Should only be category , make , brand , budget , body_type , model"
+    },
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "text",
+      "id": "brand",
+      "label": "Label",
+      "default": "Brand",
+      "info": "Should only be category , make , brand , budget , body_type , model"
+    },
+    {
+      "type": "header",
+      "content": "Budget"
+    },
+    {
+      "type": "text",
+      "id": "Budget",
+      "label": "Label",
+      "default": "Budget",
+      "info": "Should only be category , make , brand , budget , body_type , model"
+    },
+    {
+      "type": "header",
+      "content": "Body Type"
+    },
+    {
+      "type": "text",
+      "id": "body_type",
+      "label": "Label",
+      "default": "Body Type",
+      "info": "Should only be category , make , brand , budget , body_type , model"
+    },
+    {
+      "type": "header",
+      "content": "model"
+    },
+    {
+      "type": "text",
+      "id": "model",
+      "label": "Label",
+      "default": "model",
+      "info": "Should only be category , make , brand , budget , body_type , model"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category-card",
+      "name": "Category Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collections"
+        }
+      ]
+    },
+    {
+      "type": "make",
+      "name": "Make",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collections"
+        }
+      ]
+    },
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collections"
+        }
+      ]
+    },
+    {
+      "type": "model",
+      "name": "model",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collections"
+        }
+      ]
+    },
+    {
+      "type": "budget",
+      "name": "budget",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "collection"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collections"
+        }
+      ]
+    },
+    {
+      "type": "body-type",
+      "name": "Body Type",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "collection_list",
+          "id": "collections",
+          "label": "Collections"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Browse By Products Tabs"
+    }
+  ]
+}
+{% endschema %}

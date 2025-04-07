@@ -1,0 +1,118 @@
+/* .faq-heading-wrapper.title-wrapper.center.section-header * {
+  color: #fff;
+} */
+/* .FAQ-background-color,
+.faq-section {
+  background-color: #23292f;
+} */
+.page-width.faq-page-width,
+.FAQ-background-color {
+  background-color: #f8f8f8;
+}
+.faq__wrapper {
+  max-width: 900px;
+  margin-inline: auto;
+}
+.FAQ-background-color .faq-heading-wrapper .title,
+.FAQ-background-color .faq-heading-wrapper .section-description {
+  /* color: #ffffff; */
+}
+.faq__wrapper.page-width--narrow {
+  margin-inline: auto;
+}
+.faq-qna-content-wrapper > * + *:not(.faq-block.active-faq-block) {
+  margin-bottom: 1rem;
+}
+.faq-qna-content-wrapper
+  > *:not(.faq-block:last-of-type, .faq-block.active-faq-block) {
+  margin-bottom: 0.5rem;
+}
+h3.faq-question.h3 {
+  position: relative;
+  padding-inline-end: 2.5rem;
+  cursor: pointer;
+  margin-block: unset;
+  padding-block: 1rem;
+}
+.faq-question.h3.open {
+  background-color: #f0f0f0;
+  span {
+    padding-inline: 1rem;
+    display: block;
+    line-height: 1.5;
+  }
+}
+.faq-question.h3 {
+  background-color: #23292f0d;
+  span {
+    padding-inline: 1rem;
+    display: block;
+    line-height: 1.5;
+  }
+}
+h3.faq-question.h3:not(h3.faq-question.h3.open),
+h3.faq-question.h3 .h3:not(h3.faq-question.h3.open .h3) {
+  margin: 0px;
+}
+h3.faq-question.h3 svg {
+  position: absolute;
+  right: 0rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease-in-out;
+}
+.faq-block {
+  padding: 1rem 1rem;
+  padding-inline: unset;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+}
+.faq-block.active-faq-block {
+  padding-block: unset;
+}
+h3.faq-question.h3.open svg {
+  transform: translateY(-50%) rotate(180deg);
+}
+.faq-content-wrapper {
+  height: 0px;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: all 1.5s ease;
+  padding-inline-end: 0rem;
+}
+.faq-content-wrapper.open {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: all 1.3s ease-in-out;
+  padding-left: 1rem;
+}
+.faq-content {
+  opacity: 0.7;
+  font-size: 15px;
+}
+@media (min-width: 750px) {
+  .faq-block {
+    padding: 1rem 2rem;
+  }
+  .faq-block.active-faq-block {
+    padding-block: unset;
+  }
+  h3.faq-question.h3 svg {
+    right: 1rem;
+  }
+  h3.faq-question.h3 {
+    padding-inline-end: 0rem;
+  }
+  p.faq-content {
+    font-size: 16px;
+  }
+  .faq-content-wrapper {
+    padding-inline-end: 5rem;
+  }
+  .faq-qna-content-wrapper
+    > *:not(.faq-block:last-of-type, .faq-block.active-faq-block) {
+    margin-bottom: 1.5rem;
+  }
+}

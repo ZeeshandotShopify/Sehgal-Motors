@@ -1,0 +1,168 @@
+{{ 'meta-information.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% if product.tags contains 'used car' or product.tags contains 'used cars' or product.tags contains 'Used Cars' %}
+  {% if product.metafields.custom.car_features != blank %}
+    <div class="meta-information color-{{ section.settings.color_scheme }} gradient{% if section.settings.title == blank %} no-heading{% endif %}">
+      <div
+        class=" page-width page--width--cstm  product-page-page-width   product-page-with-thumbnails-page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
+        {% if product.metafields.custom.car_features.value %}
+          {%- unless section.settings.title == blank -%}
+            <div class="title-wrapper-with-link title-wrapper--no-top-margin section__title">
+              <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+                {{ section.settings.title }}
+              </h2>
+            </div>
+          {%- endunless -%}
+         
+
+          <div class="car-features-list-items">
+            {% assign values_list = product.metafields.custom.car_features.value %}
+            <ul class="car-features-list">
+              {% for item in values_list %}
+                <li class="feature-item">
+                  {% assign item_value = item.values | downcase | handleize | strip %}
+                  {% if item_value == 'abs' %}
+                    {% render 'custom-icons', custom_icon: 'abs' %}
+                  {% endif %}
+                  {% if item_value == 'sun-roof' %}
+                    {% render 'custom-icons', custom_icon: 'sun-roof' %}
+                  {% elsif item_value == 'power-windows' %}
+                    {% render 'custom-icons', custom_icon: 'power-windows' %}
+                  {% elsif item_value == 'power-steering' %}
+                    {% render 'custom-icons', custom_icon: 'power-steering' %}
+                  {% elsif item_value == 'power-mirrors' %}
+                    {% render 'custom-icons', custom_icon: 'power-mirrors' %}
+                  {% elsif item_value == 'power-locks' %}
+                    {% render 'custom-icons', custom_icon: 'power-locks' %}
+                  {% elsif item_value == 'keyless-entry' %}
+                    {% render 'custom-icons', custom_icon: 'keyless-entry' %}
+                  {% elsif item_value == 'navigation-system' %}
+                    {% render 'custom-icons', custom_icon: 'navigation-system' %}
+                  {% elsif item_value == 'immobilizer-key' %}
+                    {% render 'custom-icons', custom_icon: 'immobilizer-key' %}
+                  {% elsif item_value == 'dvd-player' %}
+                    {% render 'custom-icons', custom_icon: 'dvd-player' %}
+                  {% elsif item_value == 'cruise-control' %}
+                    {% render 'custom-icons', custom_icon: 'cruise-control' %}
+                  {% elsif item_value == 'cd-player' %}
+                    {% render 'custom-icons', custom_icon: 'cd-player' %}
+                  {% elsif item_value == 'alloy-rims' %}
+                    {% render 'custom-icons', custom_icon: 'alloy-rims' %}
+                  {% elsif item_value == 'air-conditioning' %}
+                    {% render 'custom-icons', custom_icon: 'air-conditioning' %}
+                  {% elsif item_value == 'air-bags' %}
+                    {% render 'custom-icons', custom_icon: 'air-bags' %}
+                  {% elsif item_value == 'am-fm-radio' %}
+                    {% render 'custom-icons', custom_icon: 'am-fm-radio' %}
+                  {% elsif item_value == 'power-windows' %}
+                    {% render 'custom-icons', custom_icon: 'power-window' %}
+                  {% endif %}
+                  <span>{{ item.values }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+{% schema %}
+{
+  "name": "Meta Information",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Heading",
+      "label": "t:sections.multicolumn.settings.title.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meta Information"
+    }
+  ]
+}
+{% endschema %}
